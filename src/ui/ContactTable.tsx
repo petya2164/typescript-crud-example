@@ -62,7 +62,7 @@ export default class ContactTable extends React.Component<RouteComponentProps, I
 
                 {contacts.length === 0 && (
                     <div className="text-center">
-                        <h2>No contact found at the moment</h2>
+                        <h3>No contact found at the moment</h3>
                     </div>
                 )}
 

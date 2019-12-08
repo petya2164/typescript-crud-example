@@ -1,68 +1,68 @@
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
-import { Client } from "../interfaces/Client";
-import { ClientLogic } from "../businessLogic/ClientLogic";
+import { Location } from "../interfaces/Location";
+import { LocationLogic } from "../businessLogic/LocationLogic";
 
 interface IState {
-    clients: Client[];
+    locations: Location[];
 }
 
-export default class ClientTable extends React.Component<RouteComponentProps, IState> {
-    clientLogic: ClientLogic;
+export default class LocationTable extends React.Component<RouteComponentProps, IState> {
+    locationLogic: LocationLogic;
 
     constructor(props: RouteComponentProps) {
         super(props);
-        this.clientLogic = new ClientLogic();
-        this.state = { clients: [] };
+        this.locationLogic = new LocationLogic();
+        this.state = { locations: [] };
     }
 
     public componentDidMount(): void {
-        this.clientLogic.getClients().then(data => {
-            this.setState({ clients: data });
+        this.locationLogic.getLocations().then(data => {
+            this.setState({ locations: data });
         });
     }
 
-    public deleteClient(id: number) {
-        this.clientLogic.deleteClient(id).then(() => {
-            const index = this.state.clients.findIndex(client => client.id === id);
-            this.state.clients.splice(index, 1);
-            this.setState({ clients: this.state.clients });
+    public deleteLocation(id: number) {
+        this.locationLogic.deleteLocation(id).then(() => {
+            const index = this.state.locations.findIndex(location => location.id === id);
+            this.state.locations.splice(index, 1);
+            this.setState({ locations: this.state.locations });
         });
     }
 
-    public async generateClient() {
-        let random: Client = await this.clientLogic.generateRandomClient();
+    public async generateLocation() {
+        let random: Location = await this.locationLogic.generateRandomLocation();
 
-        this.clientLogic.addClient(random).then(client => {
-            console.log("Random client added");
-            console.log(client);
-            this.state.clients.push(client);
-            this.setState({ clients: this.state.clients });
+        this.locationLogic.addLocation(random).then(location => {
+            console.log("Random location added");
+            console.log(location);
+            this.state.locations.push(location);
+            this.setState({ locations: this.state.locations });
         });
     }
 
     public render() {
-        const clients = this.state.clients;
+        const locations = this.state.locations;
         return (
             <div className="container">
                 <br />
                 <div className="text-center">
-                    <h2>Clients</h2>
+                    <h2>Locations</h2>
                 </div>
 
                 <div className="btn-toolbar">
-                    <Link to={`client_edit`} className="btn btn-success mr-2">
-                        Create New Client
+                    <Link to={`location_edit`} className="btn btn-success mr-2">
+                        Create New Location
                     </Link>
-                    <button className="btn btn-primary" onClick={() => this.generateClient()}>
-                        Generate Random Client
+                    <button className="btn btn-primary" onClick={() => this.generateLocation()}>
+                        Generate Random Location
                     </button>
                 </div>
 
-                {clients.length === 0 && (
+                {locations.length === 0 && (
                     <div className="text-center">
-                        <h3>No client found at the moment</h3>
+                        <h3>No location found at the moment</h3>
                     </div>
                 )}
 
@@ -74,37 +74,37 @@ export default class ClientTable extends React.Component<RouteComponentProps, IS
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Sector</th>
+                                    <th scope="col">Address</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {clients &&
-                                    clients.map(client => (
-                                        <tr key={client.id}>
-                                            <td>{client.id}</td>
-                                            <td>{client.name}</td>
-                                            <td>{client.description}</td>
-                                            <td>{client.sector}</td>
+                                {locations &&
+                                    locations.map(location => (
+                                        <tr key={location.id}>
+                                            <td>{location.id}</td>
+                                            <td>{location.name}</td>
+                                            <td>{location.description}</td>
+                                            <td>{location.address}</td>
 
                                             <td>
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div className="btn-toolbar">
                                                         <Link
-                                                            to={`client_edit/${client.id}`}
+                                                            to={`location_edit/${location.id}`}
                                                             className="btn btn-sm btn-outline-secondary mr-1"
                                                         >
-                                                            Edit Client
+                                                            Edit Location
                                                         </Link>
                                                         <button
                                                             className="btn btn-sm btn-outline-secondary"
                                                             onClick={() =>
-                                                                this.deleteClient(
-                                                                    client.id as number
+                                                                this.deleteLocation(
+                                                                    location.id as number
                                                                 )
                                                             }
                                                         >
-                                                            Delete Client
+                                                            Delete Location
                                                         </button>
                                                     </div>
                                                 </div>

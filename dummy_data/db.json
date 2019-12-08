@@ -103,6 +103,19 @@
       "id": 8
     }
   ],
-  "locations": [],
+  "locations": [
+    {
+      "name": "Realigned",
+      "description": "Total didactic hierarchy",
+      "address": "98594 Fleta Station",
+      "id": 3
+    },
+    {
+      "name": "Persistent",
+      "description": "Realigned bandwidth-monitored synergy",
+      "address": "4104 Dedrick Green",
+      "id": 4
+    }
+  ],
   "clientMeetings": []
 }

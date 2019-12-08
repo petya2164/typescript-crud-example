@@ -11,7 +11,7 @@
 }
 
 nav {
-    width: 400px;
+    width: 660px;
     margin: 0 auto;
     background: #282c34;
     height: 60px;
@@ -38,7 +38,7 @@ nav ul li a:hover {
 }
 
 table {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .App-link {
