@@ -115,7 +115,55 @@
       "description": "Realigned bandwidth-monitored synergy",
       "address": "4104 Dedrick Green",
       "id": 4
+    },
+    {
+      "name": "Horizontal",
+      "description": "Stand-alone even-keeled infrastructure",
+      "address": "541 Domenica Course",
+      "id": 5
+    },
+    {
+      "name": "Assimilated",
+      "description": "Pre-emptive content-based pricing structure",
+      "address": "4782 Itzel Plaza",
+      "id": 6
     }
   ],
-  "clientMeetings": []
+  "clientMeetings": [
+    {
+      "title": "Devolved",
+      "agenda": "ubiquitous whiteboard schemas",
+      "startDate": "2019-02-24T15:34:24.153Z",
+      "endDate": "2019-12-08T10:42:48.931Z",
+      "id": 2
+    },
+    {
+      "title": "Cross-group",
+      "agenda": "end-to-end iterate synergies",
+      "startDate": "2019-11-06T00:28:19.199Z",
+      "endDate": "2019-12-07T23:42:10.682Z",
+      "id": 4
+    },
+    {
+      "title": "Persevering",
+      "agenda": "user-centric grow applications",
+      "startDate": "2019-09-09T17:02:50.454Z",
+      "endDate": "2019-12-08T15:38:14.648Z",
+      "id": 5
+    },
+    {
+      "title": "Profound",
+      "agenda": "sexy evolve relationships",
+      "startDate": "2019-04-05T00:15:53.163Z",
+      "endDate": "2019-12-08T19:28:40.842Z",
+      "id": 6
+    },
+    {
+      "title": "Intuitive",
+      "agenda": "transparent facilitate e-services",
+      "startDate": "2019-06-11T07:28:19.992Z",
+      "endDate": "2019-12-08T02:18:38.501Z",
+      "id": 8
+    }
+  ]
 }

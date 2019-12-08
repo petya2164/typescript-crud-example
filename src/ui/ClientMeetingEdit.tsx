@@ -1,28 +1,28 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-import { Location } from "../interfaces/Location";
-import { LocationLogic } from "../businessLogic/LocationLogic";
+import { ClientMeeting } from "../interfaces/ClientMeeting";
+import { ClientMeetingLogic } from "../businessLogic/ClientMeetingLogic";
 
 export interface IFormState {
     id: number;
-    location: Partial<Location>;
+    clientMeeting: Partial<ClientMeeting>;
     submitSuccess: boolean;
     loading: boolean;
 }
 
-class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState> {
-    locationLogic: LocationLogic;
+class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormState> {
+    clientMeetingLogic: ClientMeetingLogic;
 
     constructor(props: RouteComponentProps) {
         super(props);
 
-        this.locationLogic = new LocationLogic();
+        this.clientMeetingLogic = new ClientMeetingLogic();
 
         this.state = {
             // The id will be undefined when creating a new item
             id: this.props.match.params.id,
-            location: {},
+            clientMeeting: {},
             loading: false,
             submitSuccess: false
         };
@@ -31,8 +31,8 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
     public componentDidMount(): void {
         // Retrieve current item if the id is defined
         if (this.state.id) {
-            this.locationLogic.getLocation(this.state.id).then(data => {
-                this.setState({ location: data });
+            this.clientMeetingLogic.getClientMeeting(this.state.id).then(data => {
+                this.setState({ clientMeeting: data });
             });
         }
     }
@@ -41,40 +41,42 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
         e.preventDefault();
         this.setState({ loading: true });
 
-        const handleCompletion = (location: Location) => {
-            console.log("Location id: " + location.id);
+        const handleCompletion = (clientMeeting: ClientMeeting) => {
+            console.log("ClientMeeting id: " + clientMeeting.id);
             this.setState({ submitSuccess: true, loading: false });
             setTimeout(() => {
-                this.props.history.push("/location_table");
+                this.props.history.push("/client_meeting_table");
             }, 1000);
         };
 
         // Update the current item if the id is defined
         if (this.state.id) {
-            this.locationLogic
-                .updateLocation(this.state.location as Location)
+            this.clientMeetingLogic
+                .updateClientMeeting(this.state.clientMeeting as ClientMeeting)
                 .then(handleCompletion);
         } else {
             // Otherwise create a new item
-            this.locationLogic.addLocation(this.state.location as Location).then(handleCompletion);
+            this.clientMeetingLogic
+                .addClientMeeting(this.state.clientMeeting as ClientMeeting)
+                .then(handleCompletion);
         }
     };
 
     private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
-        let location: any = this.state.location;
-        location[e.currentTarget.id] = e.currentTarget.value;
-        this.setState({ location: location });
+        let clientMeeting: any = this.state.clientMeeting;
+        clientMeeting[e.currentTarget.id] = e.currentTarget.value;
+        this.setState({ clientMeeting: clientMeeting });
     };
 
     public render() {
         const { submitSuccess, loading } = this.state;
         return (
             <div className="App">
-                {this.state.location && (
+                {this.state.clientMeeting && (
                     <div>
                         <div className={"col-md-12 form-wrapper"}>
-                            <h2> Edit/Create Location </h2>
+                            <h2> Edit/Create Client Meeting </h2>
 
                             {submitSuccess && (
                                 <div className="alert alert-info" role="alert">
@@ -88,44 +90,56 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
                                 noValidate={true}
                             >
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="name"> Location Name </label>
+                                    <label htmlFor="title"> Meeting Title </label>
                                     <input
                                         type="text"
-                                        id="name"
-                                        defaultValue={this.state.location.name}
+                                        id="title"
+                                        defaultValue={this.state.clientMeeting.title}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
-                                        placeholder="Enter location's name"
+                                        placeholder="Enter the title"
                                     />
                                 </div>
 
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="description"> Description </label>
+                                    <label htmlFor="description"> Agenda </label>
                                     <input
                                         type="text"
-                                        id="description"
-                                        defaultValue={this.state.location.description}
+                                        id="agenda"
+                                        defaultValue={this.state.clientMeeting.agenda}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
-                                        placeholder="Enter location's description"
+                                        placeholder="Enter the agenda"
                                     />
                                 </div>
 
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="phone"> Address </label>
+                                    <label htmlFor="startdate"> Start Date </label>
                                     <input
                                         type="text"
-                                        id="address"
-                                        defaultValue={this.state.location.address}
+                                        id="startDate"
+                                        defaultValue={this.state.clientMeeting.startDate}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
-                                        placeholder="Enter location's address"
+                                        placeholder="Enter the start date"
+                                    />
+                                </div>
+
+                                <div className="form-group col-md-12">
+                                    <label htmlFor="startdate"> End Date </label>
+                                    <input
+                                        type="text"
+                                        id="endDate"
+                                        defaultValue={this.state.clientMeeting.endDate}
+                                        onChange={e => this.handleInputChanges(e)}
+                                        className="form-control"
+                                        placeholder="Enter the end date"
                                     />
                                 </div>
 
                                 <div className="form-group col-md-4 pull-right">
                                     <button className="btn btn-success" type="submit">
-                                        Edit/Create location{" "}
+                                        Edit/Create client meeting{" "}
                                     </button>
                                     {loading && <span className="fa fa-circle-o-notch fa-spin" />}
                                 </div>
@@ -138,4 +152,4 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
     }
 }
 
-export default withRouter(LocationEdit);
+export default withRouter(ClientMeetingEdit);

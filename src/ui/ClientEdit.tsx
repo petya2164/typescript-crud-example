@@ -86,7 +86,7 @@ class ClientEdit extends React.Component<RouteComponentProps<any>, IFormState> {
                                 noValidate={true}
                             >
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="first_name"> Company Name </label>
+                                    <label htmlFor="name"> Company Name </label>
                                     <input
                                         type="text"
                                         id="name"

@@ -8,6 +8,8 @@ import ClientTable from "./ClientTable";
 import ClientEdit from "./ClientEdit";
 import LocationTable from "./LocationTable";
 import LocationEdit from "./LocationEdit";
+import ClientMeetingTable from "./ClientMeetingTable";
+import ClientMeetingEdit from "./ClientMeetingEdit";
 import SettingsPage from "./SettingsPage";
 
 class App extends React.Component<RouteComponentProps<any>> {
@@ -49,6 +51,9 @@ class App extends React.Component<RouteComponentProps<any>> {
                     <Route path={"/location_table"} exact component={LocationTable} />
                     <Route path={"/location_edit"} exact component={LocationEdit} />
                     <Route path={"/location_edit/:id"} exact component={LocationEdit} />
+                    <Route path={"/client_meeting_table"} exact component={ClientMeetingTable} />
+                    <Route path={"/client_meeting_edit"} exact component={ClientMeetingEdit} />
+                    <Route path={"/client_meeting_edit/:id"} exact component={ClientMeetingEdit} />
                     <Route path={"/settings"} exact component={SettingsPage} />
                 </Switch>
             </div>
