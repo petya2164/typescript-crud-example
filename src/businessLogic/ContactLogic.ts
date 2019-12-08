@@ -31,6 +31,9 @@ export class ContactLogic {
         return this.contactStore.deleteContact(id);
     }
 
+    /**
+     * Special function to generate an entity with random data
+     */
     async generateRandomContact(): Promise<Contact> {
         const firstName = faker.name.firstName();
         const lastName = faker.name.lastName();

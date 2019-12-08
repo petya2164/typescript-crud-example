@@ -16,7 +16,7 @@ export interface Client {
      */
     description: string;
     /**
-     * The estimated net worth of this company
+     * The main sector of this company
      */
-    netWorthValue: number;
+    sector: string;
 }

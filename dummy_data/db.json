@@ -1,4 +1,42 @@
 {
+  "clients": [
+    {
+      "name": "Breitenberg, Price and Waelchi",
+      "description": "Synergistic non-volatile emulation",
+      "sector": "Music",
+      "id": 1
+    },
+    {
+      "name": "Cummerata Group",
+      "description": "Inverse global conglomeration",
+      "sector": "Health",
+      "id": 2
+    },
+    {
+      "name": "Botsford and Swaniawski",
+      "description": "Switchable 24 hour forecast",
+      "sector": "Kids",
+      "id": 3
+    },
+    {
+      "name": "Cremin, Jacobson and Kessler",
+      "description": "Realigned real-time collaboration",
+      "sector": "Jewelery",
+      "id": 6
+    },
+    {
+      "name": "Howe, Jenkins and O'Kon",
+      "description": "Digitized discrete capability",
+      "sector": "Sports",
+      "id": 8
+    },
+    {
+      "name": "Grady, Grant and Little",
+      "description": "Triple-buffered impactful synergy",
+      "sector": "Beauty",
+      "id": 9
+    }
+  ],
   "contacts": [
     {
       "firstName": "Karson",
@@ -64,5 +102,7 @@
       "phone": "828-7006",
       "id": 8
     }
-  ]
+  ],
+  "locations": [],
+  "clientMeetings": []
 }

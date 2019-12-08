@@ -5,9 +5,9 @@ export interface ContactStore {
 
     getContact(id: number): Promise<Contact>;
 
-    addContact(Contact: Contact): Promise<Contact>;
+    addContact(contact: Contact): Promise<Contact>;
 
-    updateContact(Contact: Contact): Promise<Contact>;
+    updateContact(contact: Contact): Promise<Contact>;
 
     deleteContact(id: number): Promise<any>;
 }
