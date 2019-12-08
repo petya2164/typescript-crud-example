@@ -1,0 +1,68 @@
+{
+  "contacts": [
+    {
+      "firstName": "Karson",
+      "lastName": "Klocko",
+      "role": "Facilitator",
+      "email": "Karson.Klocko6@hotmail.com",
+      "phone": "629-1390",
+      "id": 1
+    },
+    {
+      "firstName": "Antonetta",
+      "lastName": "Lakin",
+      "role": "Architect",
+      "email": "Antonetta_Lakin@gmail.com",
+      "phone": "677-4578",
+      "id": 2
+    },
+    {
+      "firstName": "Evangeline",
+      "lastName": "Kreiger",
+      "role": "Manager",
+      "email": "Evangeline91@hotmail.com",
+      "phone": "890-7463",
+      "id": 3
+    },
+    {
+      "firstName": "Aryanna",
+      "lastName": "Vandervort",
+      "role": "Producer",
+      "email": "Aryanna19@yahoo.com",
+      "phone": "654-5146",
+      "id": 4
+    },
+    {
+      "firstName": "Carlotta",
+      "lastName": "Torphy",
+      "role": "Architect",
+      "email": "Carlotta_Torphy25@hotmail.com",
+      "phone": "924-6632",
+      "id": 5
+    },
+    {
+      "firstName": "Kory",
+      "lastName": "Bailey",
+      "role": "Officer",
+      "email": "Kory.Bailey9@gmail.com",
+      "phone": "246-1140",
+      "id": 6
+    },
+    {
+      "firstName": "Lincoln",
+      "lastName": "Stamm",
+      "role": "Facilitator",
+      "email": "Lincoln.Stamm@hotmail.com",
+      "phone": "490-3157",
+      "id": 7
+    },
+    {
+      "firstName": "Marian",
+      "lastName": "Sauer",
+      "role": "Analyst",
+      "email": "Marian49@hotmail.com",
+      "phone": "828-7006",
+      "id": 8
+    }
+  ]
+}

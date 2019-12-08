@@ -1,0 +1,18 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "editor.formatOnType": true,
+        "editor.formatOnSave": true,
+        "prettier.printWidth": 100,
+        "prettier.tabWidth": 4,
+        "files.exclude": {
+            "**/node_modules": true
+        }
+    }
+}
