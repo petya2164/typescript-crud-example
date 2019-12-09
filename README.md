@@ -7,10 +7,10 @@ Splitting a WebApp into multiple layers has some advantages:
 * the UI layer can be hard to test. By moving the logic to other layers,
   it becomes easier to test.
 
-This WebApp can store data in 2 separate "backends":
+This WebApp can store and access data in 2 separate "backends":
 
 1. The browser's LocalStorage (default option)
-2. REST API (via json-server)
+2. REST API (serving dummy_data/db.json via json-server)
 
 ## Quick start
 
@@ -31,7 +31,7 @@ yarn server
 
 ### NPM
 
-```
+```bash
 # Install dependencies
 npm install
 
