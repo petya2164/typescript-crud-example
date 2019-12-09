@@ -4,74 +4,18 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Location } from "../interfaces/Location";
 import { LocationLogic } from "../businessLogic/LocationLogic";
 
-export interface IFormState {
-    id: number;
-    location: Partial<Location>;
-    submitSuccess: boolean;
-    loading: boolean;
-}
+import EntityEditBase from "./EntityEditBase";
 
-class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState> {
-    locationLogic: LocationLogic;
-
+export class LocationEdit extends EntityEditBase<Location> {
     constructor(props: RouteComponentProps) {
-        super(props);
-
-        this.locationLogic = new LocationLogic();
-
-        this.state = {
-            // The id will be undefined when creating a new item
-            id: this.props.match.params.id,
-            location: {},
-            loading: false,
-            submitSuccess: false
-        };
+        super(props, new LocationLogic(), "/location_table");
     }
-
-    public componentDidMount(): void {
-        // Retrieve current item if the id is defined
-        if (this.state.id) {
-            this.locationLogic.getLocation(this.state.id).then(data => {
-                this.setState({ location: data });
-            });
-        }
-    }
-
-    private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        this.setState({ loading: true });
-
-        const handleCompletion = (location: Location) => {
-            console.log("Location id: " + location.id);
-            this.setState({ submitSuccess: true, loading: false });
-            setTimeout(() => {
-                this.props.history.push("/location_table");
-            }, 1000);
-        };
-
-        // Update the current item if the id is defined
-        if (this.state.id) {
-            this.locationLogic
-                .updateLocation(this.state.location as Location)
-                .then(handleCompletion);
-        } else {
-            // Otherwise create a new item
-            this.locationLogic.addLocation(this.state.location as Location).then(handleCompletion);
-        }
-    };
-
-    private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        let location: any = this.state.location;
-        location[e.currentTarget.id] = e.currentTarget.value;
-        this.setState({ location: location });
-    };
 
     public render() {
         const { submitSuccess, loading } = this.state;
         return (
             <div className="App">
-                {this.state.location && (
+                {this.state.entity && (
                     <div>
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Location </h2>
@@ -92,7 +36,7 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
                                     <input
                                         type="text"
                                         id="name"
-                                        defaultValue={this.state.location.name}
+                                        defaultValue={this.state.entity.name}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter location's name"
@@ -104,7 +48,7 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
                                     <input
                                         type="text"
                                         id="description"
-                                        defaultValue={this.state.location.description}
+                                        defaultValue={this.state.entity.description}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter location's description"
@@ -116,7 +60,7 @@ class LocationEdit extends React.Component<RouteComponentProps<any>, IFormState>
                                     <input
                                         type="text"
                                         id="address"
-                                        defaultValue={this.state.location.address}
+                                        defaultValue={this.state.entity.address}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter location's address"

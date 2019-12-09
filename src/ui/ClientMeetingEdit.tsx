@@ -4,76 +4,18 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { ClientMeeting } from "../interfaces/ClientMeeting";
 import { ClientMeetingLogic } from "../businessLogic/ClientMeetingLogic";
 
-export interface IFormState {
-    id: number;
-    clientMeeting: Partial<ClientMeeting>;
-    submitSuccess: boolean;
-    loading: boolean;
-}
+import EntityEditBase from "./EntityEditBase";
 
-class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormState> {
-    clientMeetingLogic: ClientMeetingLogic;
-
+export class ClientMeetingEdit extends EntityEditBase<ClientMeeting> {
     constructor(props: RouteComponentProps) {
-        super(props);
-
-        this.clientMeetingLogic = new ClientMeetingLogic();
-
-        this.state = {
-            // The id will be undefined when creating a new item
-            id: this.props.match.params.id,
-            clientMeeting: {},
-            loading: false,
-            submitSuccess: false
-        };
+        super(props, new ClientMeetingLogic(), "/client_meeting_table");
     }
-
-    public componentDidMount(): void {
-        // Retrieve current item if the id is defined
-        if (this.state.id) {
-            this.clientMeetingLogic.getClientMeeting(this.state.id).then(data => {
-                this.setState({ clientMeeting: data });
-            });
-        }
-    }
-
-    private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        this.setState({ loading: true });
-
-        const handleCompletion = (clientMeeting: ClientMeeting) => {
-            console.log("ClientMeeting id: " + clientMeeting.id);
-            this.setState({ submitSuccess: true, loading: false });
-            setTimeout(() => {
-                this.props.history.push("/client_meeting_table");
-            }, 1000);
-        };
-
-        // Update the current item if the id is defined
-        if (this.state.id) {
-            this.clientMeetingLogic
-                .updateClientMeeting(this.state.clientMeeting as ClientMeeting)
-                .then(handleCompletion);
-        } else {
-            // Otherwise create a new item
-            this.clientMeetingLogic
-                .addClientMeeting(this.state.clientMeeting as ClientMeeting)
-                .then(handleCompletion);
-        }
-    };
-
-    private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        let clientMeeting: any = this.state.clientMeeting;
-        clientMeeting[e.currentTarget.id] = e.currentTarget.value;
-        this.setState({ clientMeeting: clientMeeting });
-    };
 
     public render() {
         const { submitSuccess, loading } = this.state;
         return (
             <div className="App">
-                {this.state.clientMeeting && (
+                {this.state.entity && (
                     <div>
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Client Meeting </h2>
@@ -94,7 +36,7 @@ class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormS
                                     <input
                                         type="text"
                                         id="title"
-                                        defaultValue={this.state.clientMeeting.title}
+                                        defaultValue={this.state.entity.title}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter the title"
@@ -106,7 +48,7 @@ class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormS
                                     <input
                                         type="text"
                                         id="agenda"
-                                        defaultValue={this.state.clientMeeting.agenda}
+                                        defaultValue={this.state.entity.agenda}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter the agenda"
@@ -118,7 +60,7 @@ class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormS
                                     <input
                                         type="text"
                                         id="startDate"
-                                        defaultValue={this.state.clientMeeting.startDate}
+                                        defaultValue={this.state.entity.startDate}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter the start date"
@@ -130,7 +72,7 @@ class ClientMeetingEdit extends React.Component<RouteComponentProps<any>, IFormS
                                     <input
                                         type="text"
                                         id="endDate"
-                                        defaultValue={this.state.clientMeeting.endDate}
+                                        defaultValue={this.state.entity.endDate}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter the end date"

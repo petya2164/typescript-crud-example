@@ -4,72 +4,18 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Client } from "../interfaces/Client";
 import { ClientLogic } from "../businessLogic/ClientLogic";
 
-export interface IFormState {
-    id: number;
-    client: Partial<Client>;
-    submitSuccess: boolean;
-    loading: boolean;
-}
+import EntityEditBase from "./EntityEditBase";
 
-class ClientEdit extends React.Component<RouteComponentProps<any>, IFormState> {
-    clientLogic: ClientLogic;
-
+export class ClientEdit extends EntityEditBase<Client> {
     constructor(props: RouteComponentProps) {
-        super(props);
-
-        this.clientLogic = new ClientLogic();
-
-        this.state = {
-            // The id will be undefined when creating a new item
-            id: this.props.match.params.id,
-            client: {},
-            loading: false,
-            submitSuccess: false
-        };
+        super(props, new ClientLogic(), "/client_table");
     }
-
-    public componentDidMount(): void {
-        // Retrieve current item if the id is defined
-        if (this.state.id) {
-            this.clientLogic.getClient(this.state.id).then(data => {
-                this.setState({ client: data });
-            });
-        }
-    }
-
-    private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        this.setState({ loading: true });
-
-        const handleCompletion = (client: Client) => {
-            console.log("Client id: " + client.id);
-            this.setState({ submitSuccess: true, loading: false });
-            setTimeout(() => {
-                this.props.history.push("/client_table");
-            }, 1000);
-        };
-
-        // Update the current item if the id is defined
-        if (this.state.id) {
-            this.clientLogic.updateClient(this.state.client as Client).then(handleCompletion);
-        } else {
-            // Otherwise create a new item
-            this.clientLogic.addClient(this.state.client as Client).then(handleCompletion);
-        }
-    };
-
-    private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        let client: any = this.state.client;
-        client[e.currentTarget.id] = e.currentTarget.value;
-        this.setState({ client: client });
-    };
 
     public render() {
         const { submitSuccess, loading } = this.state;
         return (
             <div className="App">
-                {this.state.client && (
+                {this.state.entity && (
                     <div>
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Client </h2>
@@ -90,7 +36,7 @@ class ClientEdit extends React.Component<RouteComponentProps<any>, IFormState> {
                                     <input
                                         type="text"
                                         id="name"
-                                        defaultValue={this.state.client.name}
+                                        defaultValue={this.state.entity.name}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter client's name"
@@ -102,7 +48,7 @@ class ClientEdit extends React.Component<RouteComponentProps<any>, IFormState> {
                                     <input
                                         type="text"
                                         id="description"
-                                        defaultValue={this.state.client.description}
+                                        defaultValue={this.state.entity.description}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter client's description"
@@ -114,7 +60,7 @@ class ClientEdit extends React.Component<RouteComponentProps<any>, IFormState> {
                                     <input
                                         type="text"
                                         id="sector"
-                                        defaultValue={this.state.client.sector}
+                                        defaultValue={this.state.entity.sector}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter client's main sector"

@@ -4,48 +4,15 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { ClientMeeting } from "../interfaces/ClientMeeting";
 import { ClientMeetingLogic } from "../businessLogic/ClientMeetingLogic";
 
-interface IState {
-    clientMeetings: ClientMeeting[];
-}
+import EntityTableBase from "./EntityTableBase";
 
-export default class ClientMeetingTable extends React.Component<RouteComponentProps, IState> {
-    clientMeetingLogic: ClientMeetingLogic;
-
+export default class ClientMeetingTable extends EntityTableBase<ClientMeeting> {
     constructor(props: RouteComponentProps) {
-        super(props);
-        this.clientMeetingLogic = new ClientMeetingLogic();
-        this.state = { clientMeetings: [] };
-    }
-
-    public componentDidMount(): void {
-        this.clientMeetingLogic.getClientMeetings().then(data => {
-            this.setState({ clientMeetings: data });
-        });
-    }
-
-    public deleteClientMeeting(id: number) {
-        this.clientMeetingLogic.deleteClientMeeting(id).then(() => {
-            const index = this.state.clientMeetings.findIndex(
-                clientMeeting => clientMeeting.id === id
-            );
-            this.state.clientMeetings.splice(index, 1);
-            this.setState({ clientMeetings: this.state.clientMeetings });
-        });
-    }
-
-    public async generateClientMeeting() {
-        let random: ClientMeeting = await this.clientMeetingLogic.generateRandomClientMeeting();
-
-        this.clientMeetingLogic.addClientMeeting(random).then(clientMeeting => {
-            console.log("Random clientmeeting added");
-            console.log(clientMeeting);
-            this.state.clientMeetings.push(clientMeeting);
-            this.setState({ clientMeetings: this.state.clientMeetings });
-        });
+        super(props, new ClientMeetingLogic());
     }
 
     public render() {
-        const clientMeetings = this.state.clientMeetings;
+        const clientMeetings = this.state.entities;
         return (
             <div className="container">
                 <br />
@@ -57,10 +24,7 @@ export default class ClientMeetingTable extends React.Component<RouteComponentPr
                     <Link to={`client_meeting_edit`} className="btn btn-success mr-2">
                         Create New ClientMeeting
                     </Link>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => this.generateClientMeeting()}
-                    >
+                    <button className="btn btn-primary" onClick={() => this.generateEntity()}>
                         Generate Random ClientMeeting
                     </button>
                 </div>
@@ -105,9 +69,7 @@ export default class ClientMeetingTable extends React.Component<RouteComponentPr
                                                         <button
                                                             className="btn btn-sm btn-outline-secondary"
                                                             onClick={() =>
-                                                                this.deleteClientMeeting(
-                                                                    clientMeeting.id as number
-                                                                )
+                                                                this.deleteEntity(clientMeeting.id!)
                                                             }
                                                         >
                                                             Delete Meeting

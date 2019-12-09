@@ -4,46 +4,15 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { Location } from "../interfaces/Location";
 import { LocationLogic } from "../businessLogic/LocationLogic";
 
-interface IState {
-    locations: Location[];
-}
+import EntityTableBase from "./EntityTableBase";
 
-export default class LocationTable extends React.Component<RouteComponentProps, IState> {
-    locationLogic: LocationLogic;
-
+export default class LocationTable extends EntityTableBase<Location> {
     constructor(props: RouteComponentProps) {
-        super(props);
-        this.locationLogic = new LocationLogic();
-        this.state = { locations: [] };
-    }
-
-    public componentDidMount(): void {
-        this.locationLogic.getLocations().then(data => {
-            this.setState({ locations: data });
-        });
-    }
-
-    public deleteLocation(id: number) {
-        this.locationLogic.deleteLocation(id).then(() => {
-            const index = this.state.locations.findIndex(location => location.id === id);
-            this.state.locations.splice(index, 1);
-            this.setState({ locations: this.state.locations });
-        });
-    }
-
-    public async generateLocation() {
-        let random: Location = await this.locationLogic.generateRandomLocation();
-
-        this.locationLogic.addLocation(random).then(location => {
-            console.log("Random location added");
-            console.log(location);
-            this.state.locations.push(location);
-            this.setState({ locations: this.state.locations });
-        });
+        super(props, new LocationLogic());
     }
 
     public render() {
-        const locations = this.state.locations;
+        const locations = this.state.entities;
         return (
             <div className="container">
                 <br />
@@ -55,7 +24,7 @@ export default class LocationTable extends React.Component<RouteComponentProps, 
                     <Link to={`location_edit`} className="btn btn-success mr-2">
                         Create New Location
                     </Link>
-                    <button className="btn btn-primary" onClick={() => this.generateLocation()}>
+                    <button className="btn btn-primary" onClick={() => this.generateEntity()}>
                         Generate Random Location
                     </button>
                 </div>
@@ -99,9 +68,7 @@ export default class LocationTable extends React.Component<RouteComponentProps, 
                                                         <button
                                                             className="btn btn-sm btn-outline-secondary"
                                                             onClick={() =>
-                                                                this.deleteLocation(
-                                                                    location.id as number
-                                                                )
+                                                                this.deleteEntity(location.id!)
                                                             }
                                                         >
                                                             Delete Location

@@ -4,46 +4,15 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { Client } from "../interfaces/Client";
 import { ClientLogic } from "../businessLogic/ClientLogic";
 
-interface IState {
-    clients: Client[];
-}
+import EntityTableBase from "./EntityTableBase";
 
-export default class ClientTable extends React.Component<RouteComponentProps, IState> {
-    clientLogic: ClientLogic;
-
+export default class ClientTable extends EntityTableBase<Client> {
     constructor(props: RouteComponentProps) {
-        super(props);
-        this.clientLogic = new ClientLogic();
-        this.state = { clients: [] };
-    }
-
-    public componentDidMount(): void {
-        this.clientLogic.getClients().then(data => {
-            this.setState({ clients: data });
-        });
-    }
-
-    public deleteClient(id: number) {
-        this.clientLogic.deleteClient(id).then(() => {
-            const index = this.state.clients.findIndex(client => client.id === id);
-            this.state.clients.splice(index, 1);
-            this.setState({ clients: this.state.clients });
-        });
-    }
-
-    public async generateClient() {
-        let random: Client = await this.clientLogic.generateRandomClient();
-
-        this.clientLogic.addClient(random).then(client => {
-            console.log("Random client added");
-            console.log(client);
-            this.state.clients.push(client);
-            this.setState({ clients: this.state.clients });
-        });
+        super(props, new ClientLogic());
     }
 
     public render() {
-        const clients = this.state.clients;
+        const clients = this.state.entities;
         return (
             <div className="container">
                 <br />
@@ -55,7 +24,7 @@ export default class ClientTable extends React.Component<RouteComponentProps, IS
                     <Link to={`client_edit`} className="btn btn-success mr-2">
                         Create New Client
                     </Link>
-                    <button className="btn btn-primary" onClick={() => this.generateClient()}>
+                    <button className="btn btn-primary" onClick={() => this.generateEntity()}>
                         Generate Random Client
                     </button>
                 </div>
@@ -99,9 +68,7 @@ export default class ClientTable extends React.Component<RouteComponentProps, IS
                                                         <button
                                                             className="btn btn-sm btn-outline-secondary"
                                                             onClick={() =>
-                                                                this.deleteClient(
-                                                                    client.id as number
-                                                                )
+                                                                this.deleteEntity(client.id!)
                                                             }
                                                         >
                                                             Delete Client

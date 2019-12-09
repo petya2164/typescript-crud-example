@@ -1,40 +1,19 @@
 import * as faker from "faker";
 
 import { Client } from "../interfaces/Client";
-import { ClientStore } from "../dataAccess/ClientStore";
-import { ClientStoreFactory } from "../dataAccess/ClientStoreFactory";
+import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
+import { EntityLogicBase } from "./EntityLogicBase";
 
-export class ClientLogic {
-    clientStore: ClientStore;
-
+export class ClientLogic extends EntityLogicBase<Client> {
     constructor() {
-        this.clientStore = new ClientStoreFactory().buildStore();
-    }
-
-    async getClients(): Promise<Client[]> {
-        return this.clientStore.getClients();
-    }
-
-    async getClient(id: number): Promise<Client> {
-        return this.clientStore.getClient(id);
-    }
-
-    async addClient(client: Client): Promise<Client> {
-        return this.clientStore.addClient(client);
-    }
-
-    async updateClient(client: Client): Promise<Client> {
-        return this.clientStore.updateClient(client);
-    }
-
-    async deleteClient(id: number): Promise<any> {
-        return this.clientStore.deleteClient(id);
+        super();
+        this.entityStore = new EntityStoreFactory<Client>().buildStore("clients");
     }
 
     /**
      * Special function to generate an entity with random data
      */
-    async generateRandomClient(): Promise<Client> {
+    async generateRandom(): Promise<Client> {
         let client: Client = {
             name: faker.company.companyName(),
             description: faker.company.catchPhrase(),

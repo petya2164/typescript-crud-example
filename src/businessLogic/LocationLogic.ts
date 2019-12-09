@@ -1,40 +1,19 @@
 import * as faker from "faker";
 
 import { Location } from "../interfaces/Location";
-import { LocationStore } from "../dataAccess/LocationStore";
-import { LocationStoreFactory } from "../dataAccess/LocationStoreFactory";
+import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
+import { EntityLogicBase } from "./EntityLogicBase";
 
-export class LocationLogic {
-    locationStore: LocationStore;
-
+export class LocationLogic extends EntityLogicBase<Location> {
     constructor() {
-        this.locationStore = new LocationStoreFactory().buildStore();
-    }
-
-    async getLocations(): Promise<Location[]> {
-        return this.locationStore.getLocations();
-    }
-
-    async getLocation(id: number): Promise<Location> {
-        return this.locationStore.getLocation(id);
-    }
-
-    async addLocation(location: Location): Promise<Location> {
-        return this.locationStore.addLocation(location);
-    }
-
-    async updateLocation(location: Location): Promise<Location> {
-        return this.locationStore.updateLocation(location);
-    }
-
-    async deleteLocation(id: number): Promise<any> {
-        return this.locationStore.deleteLocation(id);
+        super();
+        this.entityStore = new EntityStoreFactory<Location>().buildStore("locations");
     }
 
     /**
      * Special function to generate an entity with random data
      */
-    async generateRandomLocation(): Promise<Location> {
+    async generateRandom(): Promise<Location> {
         let location: Location = {
             name: faker.company.catchPhraseAdjective(),
             description: faker.company.catchPhrase(),

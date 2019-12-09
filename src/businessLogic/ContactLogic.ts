@@ -1,40 +1,19 @@
 import * as faker from "faker";
 
 import { Contact } from "../interfaces/Contact";
-import { ContactStore } from "../dataAccess/ContactStore";
-import { ContactStoreFactory } from "../dataAccess/ContactStoreFactory";
+import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
+import { EntityLogicBase } from "./EntityLogicBase";
 
-export class ContactLogic {
-    contactStore: ContactStore;
-
+export class ContactLogic extends EntityLogicBase<Contact> {
     constructor() {
-        this.contactStore = new ContactStoreFactory().buildStore();
-    }
-
-    async getContacts(): Promise<Contact[]> {
-        return this.contactStore.getContacts();
-    }
-
-    async getContact(id: number): Promise<Contact> {
-        return this.contactStore.getContact(id);
-    }
-
-    async addContact(contact: Contact): Promise<Contact> {
-        return this.contactStore.addContact(contact);
-    }
-
-    async updateContact(contact: Contact): Promise<Contact> {
-        return this.contactStore.updateContact(contact);
-    }
-
-    async deleteContact(id: number): Promise<any> {
-        return this.contactStore.deleteContact(id);
+        super();
+        this.entityStore = new EntityStoreFactory<Contact>().buildStore("contacts");
     }
 
     /**
      * Special function to generate an entity with random data
      */
-    async generateRandomContact(): Promise<Contact> {
+    async generateRandom(): Promise<Contact> {
         const firstName = faker.name.firstName();
         const lastName = faker.name.lastName();
 

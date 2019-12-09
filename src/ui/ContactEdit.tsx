@@ -4,72 +4,18 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Contact } from "../interfaces/Contact";
 import { ContactLogic } from "../businessLogic/ContactLogic";
 
-export interface IFormState {
-    id: number;
-    contact: Partial<Contact>;
-    submitSuccess: boolean;
-    loading: boolean;
-}
+import EntityEditBase from "./EntityEditBase";
 
-class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> {
-    contactLogic: ContactLogic;
-
+export class ContactEdit extends EntityEditBase<Contact> {
     constructor(props: RouteComponentProps) {
-        super(props);
-
-        this.contactLogic = new ContactLogic();
-
-        this.state = {
-            // The id will be undefined when creating a new item
-            id: this.props.match.params.id,
-            contact: {},
-            loading: false,
-            submitSuccess: false
-        };
+        super(props, new ContactLogic(), "/contact_table");
     }
-
-    public componentDidMount(): void {
-        // Retrieve current item if the id is defined
-        if (this.state.id) {
-            this.contactLogic.getContact(this.state.id).then(data => {
-                this.setState({ contact: data });
-            });
-        }
-    }
-
-    private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        this.setState({ loading: true });
-
-        const handleCompletion = (contact: Contact) => {
-            console.log("Contact id: " + contact.id);
-            this.setState({ submitSuccess: true, loading: false });
-            setTimeout(() => {
-                this.props.history.push("/contact_table");
-            }, 1000);
-        };
-
-        // Update the current item if the id is defined
-        if (this.state.id) {
-            this.contactLogic.updateContact(this.state.contact as Contact).then(handleCompletion);
-        } else {
-            // Otherwise create a new item
-            this.contactLogic.addContact(this.state.contact as Contact).then(handleCompletion);
-        }
-    };
-
-    private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        let contact: any = this.state.contact;
-        contact[e.currentTarget.id] = e.currentTarget.value;
-        this.setState({ contact: contact });
-    };
 
     public render() {
         const { submitSuccess, loading } = this.state;
         return (
             <div className="App">
-                {this.state.contact && (
+                {this.state.entity && (
                     <div>
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Contact </h2>
@@ -90,7 +36,7 @@ class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> 
                                     <input
                                         type="text"
                                         id="firstName"
-                                        defaultValue={this.state.contact.firstName}
+                                        defaultValue={this.state.entity.firstName}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter contact's first name"
@@ -102,7 +48,7 @@ class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> 
                                     <input
                                         type="text"
                                         id="lastName"
-                                        defaultValue={this.state.contact.lastName}
+                                        defaultValue={this.state.entity.lastName}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter contact's last name"
@@ -114,7 +60,7 @@ class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> 
                                     <input
                                         type="text"
                                         id="role"
-                                        defaultValue={this.state.contact.role}
+                                        defaultValue={this.state.entity.role}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter contact's role"
@@ -126,7 +72,7 @@ class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> 
                                     <input
                                         type="email"
                                         id="email"
-                                        defaultValue={this.state.contact.email}
+                                        defaultValue={this.state.entity.email}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter contact's email address"
@@ -138,7 +84,7 @@ class ContactEdit extends React.Component<RouteComponentProps<any>, IFormState> 
                                     <input
                                         type="text"
                                         id="phone"
-                                        defaultValue={this.state.contact.phone}
+                                        defaultValue={this.state.entity.phone}
                                         onChange={e => this.handleInputChanges(e)}
                                         className="form-control"
                                         placeholder="Enter contact's phone number"

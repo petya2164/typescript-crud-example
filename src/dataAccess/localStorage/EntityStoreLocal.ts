@@ -1,13 +1,16 @@
-import { Location } from "../../interfaces/Location";
-import { LocationStore } from "../LocationStore";
+import { EntityStore } from "../EntityStore";
 import { LocalStorageSettings } from "./LocalStorageSettings";
 
-export class LocationStoreLocal implements LocationStore {
-    storeKey: string;
-    items: Location[] = [];
+interface HasId {
+    id?: number;
+}
 
-    constructor() {
-        this.storeKey = LocalStorageSettings.prefix + "locations";
+export class EntityStoreLocal<T extends HasId> implements EntityStore<T> {
+    storeKey: string;
+    items: T[] = [];
+
+    constructor(collectionName: string) {
+        this.storeKey = LocalStorageSettings.prefix + collectionName;
         this.items = JSON.parse(localStorage.getItem(this.storeKey) || "[]");
     }
 
@@ -21,36 +24,36 @@ export class LocationStoreLocal implements LocationStore {
         return maxId;
     }
 
-    async getLocations(): Promise<Location[]> {
+    async getAll(): Promise<T[]> {
         // Always return a copy of the items array
         return this.items.slice();
     }
 
-    async getLocation(id: number): Promise<Location> {
-        let location = this.items.find(item => item.id == id);
+    async getById(id: number): Promise<T> {
+        let entity = this.items.find(item => item.id == id);
         // Always return a copy of the item
-        return <Location>Object.assign({}, location);
+        return <T>Object.assign({}, entity);
     }
 
-    async addLocation(location: Location): Promise<Location> {
-        if (location.id === undefined) {
-            location.id = this.findMaxId() + 1;
+    async add(entity: T): Promise<T> {
+        if (entity.id === undefined) {
+            entity.id = this.findMaxId() + 1;
         }
-        this.items.push(location);
+        this.items.push(entity);
         localStorage.setItem(this.storeKey, JSON.stringify(this.items));
         // Always return a copy of the item
-        return <Location>Object.assign({}, location);
+        return <T>Object.assign({}, entity);
     }
 
-    async updateLocation(location: Location): Promise<Location> {
-        let current = this.items.find(item => item.id == location.id) || {};
-        Object.assign(current, location);
+    async update(entity: T): Promise<T> {
+        let current = this.items.find(item => item.id == entity.id) || {};
+        Object.assign(current, entity);
         localStorage.setItem(this.storeKey, JSON.stringify(this.items));
         // Always return a copy of the item
-        return <Location>Object.assign({}, current);
+        return <T>Object.assign({}, current);
     }
 
-    async deleteLocation(id: number): Promise<any> {
+    async delete(id: number): Promise<any> {
         let index = this.items.findIndex(item => item.id == id);
         if (index != -1) {
             this.items.splice(index, 1);

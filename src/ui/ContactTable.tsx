@@ -4,46 +4,15 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { Contact } from "../interfaces/Contact";
 import { ContactLogic } from "../businessLogic/ContactLogic";
 
-interface IState {
-    contacts: Contact[];
-}
+import EntityTableBase from "./EntityTableBase";
 
-export default class ContactTable extends React.Component<RouteComponentProps, IState> {
-    contactLogic: ContactLogic;
-
+export default class ContactTable extends EntityTableBase<Contact> {
     constructor(props: RouteComponentProps) {
-        super(props);
-        this.contactLogic = new ContactLogic();
-        this.state = { contacts: [] };
-    }
-
-    public componentDidMount(): void {
-        this.contactLogic.getContacts().then(data => {
-            this.setState({ contacts: data });
-        });
-    }
-
-    public deleteContact(id: number) {
-        this.contactLogic.deleteContact(id).then(() => {
-            const index = this.state.contacts.findIndex(contact => contact.id === id);
-            this.state.contacts.splice(index, 1);
-            this.setState({ contacts: this.state.contacts });
-        });
-    }
-
-    public async generateContact() {
-        let random: Contact = await this.contactLogic.generateRandomContact();
-
-        this.contactLogic.addContact(random).then(contact => {
-            console.log("Random contact added");
-            console.log(contact);
-            this.state.contacts.push(contact);
-            this.setState({ contacts: this.state.contacts });
-        });
+        super(props, new ContactLogic());
     }
 
     public render() {
-        const contacts = this.state.contacts;
+        const contacts = this.state.entities;
         return (
             <div className="container">
                 <br />
@@ -55,7 +24,7 @@ export default class ContactTable extends React.Component<RouteComponentProps, I
                     <Link to={`contact_edit`} className="btn btn-success mr-2">
                         Create New Contact
                     </Link>
-                    <button className="btn btn-primary" onClick={() => this.generateContact()}>
+                    <button className="btn btn-primary" onClick={() => this.generateEntity()}>
                         Generate Random Contact
                     </button>
                 </div>
@@ -102,9 +71,7 @@ export default class ContactTable extends React.Component<RouteComponentProps, I
                                                         <button
                                                             className="btn btn-sm btn-outline-secondary"
                                                             onClick={() =>
-                                                                this.deleteContact(
-                                                                    contact.id as number
-                                                                )
+                                                                this.deleteEntity(contact.id!)
                                                             }
                                                         >
                                                             Delete Contact
