@@ -12,29 +12,29 @@ export class ClientMeetingStoreRest implements ClientMeetingStore {
     }
 
     async getClientMeetings(): Promise<ClientMeeting[]> {
-        let response = await axios.get(`${this.baseURL}/clientmeetings`);
+        let response = await axios.get(`${this.baseURL}/clientMeetings`);
         return <ClientMeeting[]>response.data;
     }
 
     async getClientMeeting(id: number): Promise<ClientMeeting> {
-        let response = await axios.get(`${this.baseURL}/clientmeetings/${id}`);
+        let response = await axios.get(`${this.baseURL}/clientMeetings/${id}`);
         return <ClientMeeting>response.data;
     }
 
     async addClientMeeting(clientMeeting: ClientMeeting): Promise<ClientMeeting> {
-        let response = await axios.post(`${this.baseURL}/clientmeetings`, clientMeeting);
+        let response = await axios.post(`${this.baseURL}/clientMeetings`, clientMeeting);
         return <ClientMeeting>response.data;
     }
 
     async updateClientMeeting(clientMeeting: ClientMeeting): Promise<ClientMeeting> {
         let response = await axios.patch(
-            `${this.baseURL}/clientmeetings/${clientMeeting.id}`,
+            `${this.baseURL}/clientMeetings/${clientMeeting.id}`,
             clientMeeting
         );
         return <ClientMeeting>response.data;
     }
 
     async deleteClientMeeting(id: number): Promise<any> {
-        return await axios.delete(`${this.baseURL}/clientmeetings/${id}`);
+        return await axios.delete(`${this.baseURL}/clientMeetings/${id}`);
     }
 }

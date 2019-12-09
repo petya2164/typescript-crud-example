@@ -127,30 +127,15 @@
       "description": "Pre-emptive content-based pricing structure",
       "address": "4782 Itzel Plaza",
       "id": 6
+    },
+    {
+      "name": "Versatile",
+      "description": "User-centric web-enabled model",
+      "address": "12633 Bernier Burg",
+      "id": 7
     }
   ],
   "clientMeetings": [
-    {
-      "title": "Devolved",
-      "agenda": "ubiquitous whiteboard schemas",
-      "startDate": "2019-02-24T15:34:24.153Z",
-      "endDate": "2019-12-08T10:42:48.931Z",
-      "id": 2
-    },
-    {
-      "title": "Cross-group",
-      "agenda": "end-to-end iterate synergies",
-      "startDate": "2019-11-06T00:28:19.199Z",
-      "endDate": "2019-12-07T23:42:10.682Z",
-      "id": 4
-    },
-    {
-      "title": "Persevering",
-      "agenda": "user-centric grow applications",
-      "startDate": "2019-09-09T17:02:50.454Z",
-      "endDate": "2019-12-08T15:38:14.648Z",
-      "id": 5
-    },
     {
       "title": "Profound",
       "agenda": "sexy evolve relationships",
@@ -164,6 +149,20 @@
       "startDate": "2019-06-11T07:28:19.992Z",
       "endDate": "2019-12-08T02:18:38.501Z",
       "id": 8
+    },
+    {
+      "title": "Re-contextualized",
+      "agenda": "B2B revolutionize infomediaries",
+      "startDate": "2019-11-02T00:28:37.365Z",
+      "endDate": "2019-12-08T19:33:02.393Z",
+      "id": 9
+    },
+    {
+      "title": "Balanced",
+      "agenda": "rich envisioneer communities",
+      "startDate": "2019-01-10T03:06:40.922Z",
+      "endDate": "2019-12-08T09:11:33.474Z",
+      "id": 10
     }
   ]
 }
