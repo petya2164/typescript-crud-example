@@ -1,7 +1,11 @@
 import { BackendType, Settings } from "./Settings";
 import { ClientMeetingStore } from "./ClientMeetingStore";
 import { ClientMeetingStoreRest } from "./restApi/ClientMeetingStoreRest";
+import { ClientMeetingStoreLocal } from "./localStorage/ClientMeetingStoreLocal";
 
+/**
+ * This factory builds a ClientMeetingStore object
+ */
 export class ClientMeetingStoreFactory {
     constructor() {}
 
@@ -13,8 +17,7 @@ export class ClientMeetingStoreFactory {
                 return new ClientMeetingStoreRest();
 
             case BackendType.LOCAL_STORAGE:
-                throw new Error("Invalid backend");
-            //return new ClientMeetingStoreLocal();
+                return new ClientMeetingStoreLocal();
 
             default:
                 throw new Error("Invalid backend");

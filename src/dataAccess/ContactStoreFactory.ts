@@ -1,7 +1,11 @@
 import { BackendType, Settings } from "./Settings";
 import { ContactStore } from "./ContactStore";
 import { ContactStoreRest } from "./restApi/ContactStoreRest";
+import { ContactStoreLocal } from "./localStorage/ContactStoreLocal";
 
+/**
+ * This factory builds a ContactStore object
+ */
 export class ContactStoreFactory {
     constructor() {}
 
@@ -13,8 +17,7 @@ export class ContactStoreFactory {
                 return new ContactStoreRest();
 
             case BackendType.LOCAL_STORAGE:
-                throw new Error("Invalid backend");
-            //return new ContactStoreLocal();
+                return new ContactStoreLocal();
 
             default:
                 throw new Error("Invalid backend");

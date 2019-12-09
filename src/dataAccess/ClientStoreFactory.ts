@@ -1,7 +1,11 @@
 import { BackendType, Settings } from "./Settings";
 import { ClientStore } from "./ClientStore";
 import { ClientStoreRest } from "./restApi/ClientStoreRest";
+import { ClientStoreLocal } from "./localStorage/ClientStoreLocal";
 
+/**
+ * This factory builds a ClientStore object
+ */
 export class ClientStoreFactory {
     constructor() {}
 
@@ -13,8 +17,7 @@ export class ClientStoreFactory {
                 return new ClientStoreRest();
 
             case BackendType.LOCAL_STORAGE:
-                throw new Error("Invalid backend");
-            //return new ClientStoreLocal();
+                return new ClientStoreLocal();
 
             default:
                 throw new Error("Invalid backend");

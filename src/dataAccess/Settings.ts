@@ -4,5 +4,5 @@ export enum BackendType {
 }
 
 export class Settings {
-    static backend: BackendType = BackendType.REST_API;
+    static backend: BackendType = BackendType.LOCAL_STORAGE;
 }

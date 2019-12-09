@@ -1,7 +1,11 @@
 import { BackendType, Settings } from "./Settings";
 import { LocationStore } from "./LocationStore";
 import { LocationStoreRest } from "./restApi/LocationStoreRest";
+import { LocationStoreLocal } from "./localStorage/LocationStoreLocal";
 
+/**
+ * This factory builds a LocationStore object
+ */
 export class LocationStoreFactory {
     constructor() {}
 
@@ -13,8 +17,7 @@ export class LocationStoreFactory {
                 return new LocationStoreRest();
 
             case BackendType.LOCAL_STORAGE:
-                throw new Error("Invalid backend");
-            //return new LocationStoreLocal();
+                return new LocationStoreLocal();
 
             default:
                 throw new Error("Invalid backend");
