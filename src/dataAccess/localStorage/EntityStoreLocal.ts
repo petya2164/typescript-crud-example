@@ -28,8 +28,12 @@ export class EntityStoreLocal<T extends HasId> implements EntityStore<T> {
 
     async getById(id: number): Promise<T> {
         let entity = this.items.find(item => item.id == id);
-        // Always return a copy of the item
-        return <T>Object.assign({}, entity);
+        if (entity != undefined) {
+            // Always return a copy of the item
+            return <T>Object.assign({}, entity);
+        } else {
+            throw new Error(`Cannot find entity with ID: ${id}`);
+        }
     }
 
     async add(entity: T): Promise<T> {
@@ -43,11 +47,15 @@ export class EntityStoreLocal<T extends HasId> implements EntityStore<T> {
     }
 
     async update(entity: T): Promise<T> {
-        let current = this.items.find(item => item.id == entity.id) || {};
-        Object.assign(current, entity);
-        localStorage.setItem(this.storeKey, JSON.stringify(this.items));
-        // Always return a copy of the item
-        return <T>Object.assign({}, current);
+        let current = this.items.find(item => item.id == entity.id);
+        if (current != undefined) {
+            Object.assign(current, entity);
+            localStorage.setItem(this.storeKey, JSON.stringify(this.items));
+            // Always return a copy of the item
+            return <T>Object.assign({}, current);
+        } else {
+            throw new Error(`Cannot find entity with ID: ${entity.id}`);
+        }
     }
 
     async delete(id: number): Promise<any> {
@@ -55,6 +63,8 @@ export class EntityStoreLocal<T extends HasId> implements EntityStore<T> {
         if (index != -1) {
             this.items.splice(index, 1);
             localStorage.setItem(this.storeKey, JSON.stringify(this.items));
+        } else {
+            throw new Error(`Cannot delete entity with invalid ID: ${id}`);
         }
 
         return {};

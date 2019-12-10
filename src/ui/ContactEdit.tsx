@@ -12,7 +12,7 @@ export class ContactEdit extends EntityEditBase<Contact> {
     }
 
     public render() {
-        const { submitSuccess, loading } = this.state;
+        const { loading } = this.state;
         return (
             <div className="App">
                 {this.state.entity && (
@@ -20,11 +20,7 @@ export class ContactEdit extends EntityEditBase<Contact> {
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Contact </h2>
 
-                            {submitSuccess && (
-                                <div className="alert alert-info" role="alert">
-                                    Operation has completed successfully!{" "}
-                                </div>
-                            )}
+                            {this.renderInfoMessage()}
 
                             <form
                                 id={"create-post-form"}

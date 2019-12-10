@@ -20,11 +20,7 @@ export class LocationEdit extends EntityEditBase<Location> {
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Location </h2>
 
-                            {submitSuccess && (
-                                <div className="alert alert-info" role="alert">
-                                    Operation has completed successfully!{" "}
-                                </div>
-                            )}
+                            {this.renderInfoMessage()}
 
                             <form
                                 id={"create-post-form"}

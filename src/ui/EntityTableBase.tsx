@@ -6,6 +6,7 @@ import { EntityLogicBase } from "../businessLogic/EntityLogicBase";
 
 interface IState<T extends HasId> {
     entities: T[];
+    errorMessage?: string;
 }
 
 export default abstract class EntityTableBase<T extends HasId> extends React.Component<
@@ -17,7 +18,7 @@ export default abstract class EntityTableBase<T extends HasId> extends React.Com
     constructor(props: RouteComponentProps, entityLogic: EntityLogicBase<T>) {
         super(props);
         this.entityLogic = entityLogic;
-        this.state = { entities: [] };
+        this.state = { entities: [], errorMessage: undefined };
     }
 
     abstract getEntityLabel(): string;
@@ -31,36 +32,52 @@ export default abstract class EntityTableBase<T extends HasId> extends React.Com
     abstract renderTableRow(entity: T): JSX.Element;
 
     public componentDidMount(): void {
-        this.entityLogic.getAll().then(data => {
-            this.setState({ entities: data });
-        });
+        this.loadEntities();
     }
 
-    public deleteEntity(id: number) {
-        this.entityLogic.delete(id).then(() => {
+    public async loadEntities() {
+        try {
+            const data = await this.entityLogic.getAll();
+            this.setState({ entities: data });
+        } catch (error) {
+            console.log(error);
+            this.setState({ errorMessage: error.message });
+        }
+    }
+
+    public async deleteEntity(id: number) {
+        try {
+            await this.entityLogic.delete(id);
             // Get a copy of this.state.entities
             let entities = this.state.entities.slice();
             const index = entities.findIndex(entity => entity.id === id);
             entities.splice(index, 1);
-            this.setState({ entities: entities });
-        });
+            this.setState({ entities: entities, errorMessage: undefined });
+        } catch (error) {
+            console.log(error);
+            this.setState({ errorMessage: error.message });
+        }
     }
 
     public async generateEntity() {
-        let random: T = await this.entityLogic.generateRandom();
+        try {
+            let random: T = await this.entityLogic.generateRandom();
+            let entity: T = await this.entityLogic.add(random);
 
-        this.entityLogic.add(random).then(entity => {
             console.log("Random entity added");
             console.log(entity);
             // Get a copy of this.state.entities
             let entities = this.state.entities.slice();
             entities.push(entity);
-            this.setState({ entities: entities });
-        });
+            this.setState({ entities: entities, errorMessage: undefined });
+        } catch (error) {
+            console.log(error);
+            this.setState({ errorMessage: error.message });
+        }
     }
 
     public render() {
-        const entities = this.state.entities;
+        const { entities, errorMessage } = this.state;
         return (
             <div className="container">
                 <br />
@@ -79,7 +96,13 @@ export default abstract class EntityTableBase<T extends HasId> extends React.Com
 
                 {entities.length === 0 && (
                     <div className="text-center">
-                        <h3>No {this.getEntityLabel()} found at the moment</h3>
+                        <h3>No {this.getEntityLabelPlural()} found at the moment</h3>
+                    </div>
+                )}
+
+                {errorMessage !== undefined && (
+                    <div className="alert alert-danger" role="alert">
+                        Error occurred: {errorMessage}
                     </div>
                 )}
 

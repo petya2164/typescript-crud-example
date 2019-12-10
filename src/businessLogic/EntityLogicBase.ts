@@ -12,23 +12,23 @@ export abstract class EntityLogicBase<T extends HasId> {
     abstract getCollectionName(): string;
 
     async getAll(): Promise<T[]> {
-        return this.entityStore.getAll();
+        return await this.entityStore.getAll();
     }
 
     async getById(id: number): Promise<T> {
-        return this.entityStore.getById(id);
+        return await this.entityStore.getById(id);
     }
 
     async add(entity: T): Promise<T> {
-        return this.entityStore.add(entity);
+        return await this.entityStore.add(entity);
     }
 
     async update(entity: T): Promise<T> {
-        return this.entityStore.update(entity);
+        return await this.entityStore.update(entity);
     }
 
     async delete(id: number): Promise<any> {
-        return this.entityStore.delete(id);
+        return await this.entityStore.delete(id);
     }
 
     /**

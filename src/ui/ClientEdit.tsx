@@ -20,11 +20,7 @@ export class ClientEdit extends EntityEditBase<Client> {
                         <div className={"col-md-12 form-wrapper"}>
                             <h2> Edit/Create Client </h2>
 
-                            {submitSuccess && (
-                                <div className="alert alert-info" role="alert">
-                                    Operation has completed successfully!{" "}
-                                </div>
-                            )}
+                            {this.renderInfoMessage()}
 
                             <form
                                 id={"create-post-form"}
