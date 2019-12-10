@@ -1,9 +1,15 @@
+import { HasId } from "../interfaces/HasId";
 import { EntityStore } from "../dataAccess/EntityStore";
+import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
 
-export abstract class EntityLogicBase<T> {
-    protected entityStore!: EntityStore<T>;
+export abstract class EntityLogicBase<T extends HasId> {
+    protected entityStore: EntityStore<T>;
 
-    constructor() {}
+    constructor() {
+        this.entityStore = new EntityStoreFactory<T>().buildStore(this.getCollectionName());
+    }
+
+    abstract getCollectionName(): string;
 
     async getAll(): Promise<T[]> {
         return this.entityStore.getAll();

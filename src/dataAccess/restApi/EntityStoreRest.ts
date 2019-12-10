@@ -1,11 +1,8 @@
 import axios from "axios";
 
+import { HasId } from "../../interfaces/HasId";
 import { EntityStore } from "../EntityStore";
 import { RestSettings } from "./RestSettings";
-
-interface HasId {
-    id?: number;
-}
 
 export class EntityStoreRest<T extends HasId> implements EntityStore<T> {
     endpoint: string;

@@ -1,11 +1,8 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
+import { HasId } from "../interfaces/HasId";
 import { EntityLogicBase } from "../businessLogic/EntityLogicBase";
-
-interface HasId {
-    id?: number;
-}
 
 interface IState<T extends HasId> {
     entities: T[];

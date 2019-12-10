@@ -1,13 +1,11 @@
 import * as faker from "faker";
 
 import { Location } from "../interfaces/Location";
-import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
 import { EntityLogicBase } from "./EntityLogicBase";
 
 export class LocationLogic extends EntityLogicBase<Location> {
-    constructor() {
-        super();
-        this.entityStore = new EntityStoreFactory<Location>().buildStore("locations");
+    getCollectionName(): string {
+        return "locations";
     }
 
     /**

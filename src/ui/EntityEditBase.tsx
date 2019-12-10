@@ -1,11 +1,8 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
+import { HasId } from "../interfaces/HasId";
 import { EntityLogicBase } from "../businessLogic/EntityLogicBase";
-
-interface HasId {
-    id?: number;
-}
 
 export interface IFormState<T extends HasId> {
     id: number;

@@ -1,12 +1,9 @@
+import { HasId } from "./HasId";
+
 /**
  * A Contact person who represents a Client organization
  */
-export interface Contact {
-    /**
-     * Unique identifier for this entity.
-     * This value can be undefined when the object is created
-     */
-    id?: number;
+export interface Contact extends HasId {
     /**
      * First name
      */

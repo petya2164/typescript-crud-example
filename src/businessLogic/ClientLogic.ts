@@ -1,13 +1,12 @@
 import * as faker from "faker";
 
 import { Client } from "../interfaces/Client";
-import { EntityStoreFactory } from "../dataAccess/EntityStoreFactory";
+
 import { EntityLogicBase } from "./EntityLogicBase";
 
 export class ClientLogic extends EntityLogicBase<Client> {
-    constructor() {
-        super();
-        this.entityStore = new EntityStoreFactory<Client>().buildStore("clients");
+    getCollectionName(): string {
+        return "clients";
     }
 
     /**

@@ -1,12 +1,9 @@
+import { HasId } from "./HasId";
+
 /**
  * A Location is a place of business for a Client organization
  */
-export interface Location {
-    /**
-     * Unique identifier for this entity.
-     * This value can be undefined when the object is created
-     */
-    id?: number;
+export interface Location extends HasId {
     /**
      * Short name of this Location
      */

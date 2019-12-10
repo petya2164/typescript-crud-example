@@ -1,12 +1,9 @@
+import { HasId } from "./HasId";
+
 /**
  * A meeting for a Client organization
  */
-export interface ClientMeeting {
-    /**
-     * Unique identifier for this entity.
-     * This value can be undefined when the object is created
-     */
-    id?: number;
+export interface ClientMeeting extends HasId {
     /**
      * Meeting title
      */

@@ -1,9 +1,6 @@
+import { HasId } from "../../interfaces/HasId";
 import { EntityStore } from "../EntityStore";
 import { LocalStorageSettings } from "./LocalStorageSettings";
-
-interface HasId {
-    id?: number;
-}
 
 export class EntityStoreLocal<T extends HasId> implements EntityStore<T> {
     storeKey: string;
